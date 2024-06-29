@@ -1,0 +1,124 @@
+  <%@page import="java.sql.*"%>
+<%-- 
+    Document   : IntAbPr
+    Created on : 9 Feb, 2019, 3:55:58 PM
+    Author     : Prabu
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+       <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>CEAMS</title>
+<link rel="icon" type="image/x-icon" href="img/icon.png">
+
+<link href="https://fonts.googleapis.com/css?family=Poppins:400,700,900" rel="stylesheet">
+
+<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" />
+
+<link type="text/css" rel="stylesheet" href="css/owl.carousel.css" />
+<link type="text/css" rel="stylesheet" href="css/owl.theme.default.css" />
+
+<link rel="stylesheet" href="css/font-awesome.min.css">
+
+<link type="text/css" rel="stylesheet" href="css/style.css" />
+    </head>
+    <%
+    HttpSession se=request.getSession();
+    
+    
+    
+    %>
+    <body background="img/background03.jpg">
+    <center>
+        <form name="onchange" id="first" action="IntAbPr.jsp" method="POST">
+		<div class="container">
+			<!-- Top Navigation -->
+                        <br><br><br>
+			<header>
+                            <h1 style="color: #fff">Participant Information</h1>	
+                         </header>
+                       
+ <nav class="codrops-demos">
+     <a style="color: #c7254e">Student RegNo : <input type="text" name="stdrg" value=""/></a>&nbsp;&nbsp;&nbsp;&nbsp;<br><br>
+         <a style="color: #c7254e">Student College : <input type="text" name="stdclg" value=""/></a>&nbsp;&nbsp;&nbsp;&nbsp;<br><br>
+        <button class="button" type="submit" name="search" style="vertical-align:middle"><span>Search </span></button>
+       
+        
+    </nav>
+			<br><br><br>
+			<div class="component">
+				
+				 <table border="3" style="color: #000; box-shadow: #000; background: #fff;height: 150px; width: 1200px;text-align: center" >
+                                     <thead style="background: gray">
+						<tr>
+							<th>Select</th>
+							<th>Student Name</th>
+                                                        <th>Student RegNo</th>
+							<th>Department </th>
+							<th>Year</th>
+                                                        <th>College</th>
+                                                      <th>Event</th>
+                                                         <th>Type of Event</th>
+                                                          <th>Status</th>
+						</tr>
+					</thead>
+					<tbody>
+                    <%
+                        try{
+                        String a=request.getParameter("event");
+                       String s1=request.getParameter("stdrg");
+                        String s2=request.getParameter("stdclg");
+                        
+                    Class.forName("com.mysql.jdbc.Driver");
+                    Connection  con=DriverManager.getConnection("jdbc:mysql://localhost:3306/events","root","password");
+                    Statement st=con.createStatement();
+                    ResultSet rs1=st.executeQuery("SELECT * FROM intrapar where stdreg='"+s1+"' and stdclg='"+s2+"'");
+                    while(rs1.next())
+                     
+                                                 {
+                    %>
+                    <tr>
+                       <td> <input type="radio" name="c1" value=<%=rs1.getString("sno") %> /></td>
+                       
+                        <td><%=rs1.getString("stdnm") %></td>
+                        <td><%=rs1.getString("stdreg") %></td>
+                        <td><%=rs1.getString("stddept") %></td>
+                        <td><%=rs1.getString("stdyr") %></td>
+                        <td><%=rs1.getString("stdclg") %></td>
+                        <td><%=rs1.getString("stdso") %></td>
+                        <td><%=rs1.getString("stdevnt") %></td>
+                         <td><%=rs1.getString("status") %></td>
+                        
+                    </tr>
+                    <%
+                                                 }                    
+                                                 
+                        
+                        }
+                        catch(Exception e){
+                        System.out.println(e);
+                        }
+                        %>
+                                        </tbody>
+                                 </table>
+                        </div>
+		</div>
+                <br><br><br>
+                
+               <button class="button" type="submit" name="submit" style="vertical-align:middle" onclick="form.action='ParAttd';"><span>Submit </span></button>
+                
+                
+        </form>
+                
+              
+                
+               
+    </center>
+                                        <br><br><a href="AdPg.jsp" class="main-btn">back</a>
+    </body>
+</html>
